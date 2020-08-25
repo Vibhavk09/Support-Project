@@ -24,11 +24,11 @@ namespace Support_Project
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
-        
 
+        List<Vendordata> vendordata = new List<Vendordata>();
         private void button1_Click(object sender, EventArgs e)
         {
             WorkBook workbook = WorkBook.Load(@"C:\Users\Vibhav\source\repos\Support Project\Support Project\Data.xlsx");
@@ -58,7 +58,7 @@ namespace Support_Project
 
             //--------------------------------------------------------------------------
 
-            List<Vendordata> vendordata = new List<Vendordata>();
+            
 
             
             foreach (DataRow row in dataTable.Rows)
@@ -80,8 +80,49 @@ namespace Support_Project
                 vendordata.Add(a);
             }
 
+
+
+            
+
+
+
+
             dataGridView1.DataSource = vendordata;
 
+            //----------------------------------------------------------------------------------------------
+
+            //      Searching for a specific vendor by his name and retrieving the details of the vendor
+
+
+            Vendordata b= vendordata.Find(vd => vd.VendorName == "OCGC Clothings");
+            Console.WriteLine("Vendor Name is : "+b.ContactPerson);
+
+
+            //-------------------------------------------------------------------------------------------------
+
+            //          Populating Combobox
+
+
+            foreach (Vendordata l in vendordata)
+            {
+                comboBox1.Items.Add(l.VendorName.ToString());
+            }
+
+
+            //Vendordata finalItem = new Vendordata();
+            //if (selectedVendor != null)
+            //{
+            //    finalItem = vendordata.Find(vd => vd.VendorName == selectedVendor);
+            //    Console.WriteLine("Vendor Name :  {0}  Contact Person :  {1}", finalItem.VendorName, finalItem.ContactPerson);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Please select a vendor !!");
+            //}
+
+            //object selected = comboBox1.SelectedItem;
+
+            //Console.WriteLine("Selected Item from combobox : " + selected.ToString());
 
             //Console.WriteLine("Total Items in list : "+ vendordata.Count());
             //foreach(Vendordata c in vendordata)
@@ -151,12 +192,59 @@ namespace Support_Project
                 set;
 
             }
-
         }
 
         private void richTextBox1_TextChanged_1(object sender, EventArgs e)
         {
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        string selectedVendor = string.Empty;
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            object selected = comboBox1.SelectedItem;
+
+            selectedVendor = selected.ToString();
+
+            //----------------------------------------------------------------------------------
+
+            //Binding dynamic vendor Details to a Vendordata object
+
+            Vendordata finalItem = new Vendordata();
+            
+                if (selectedVendor != null)
+                {
+                    finalItem = vendordata.Find(vd => vd.VendorName == selectedVendor);
+                    Console.WriteLine("Vendor Name :  {0}  Contact Person :  {1}", finalItem.VendorName, finalItem.ContactPerson);
+                }
+                else
+                {
+                    MessageBox.Show("Please select a vendor !!");
+                }
+            
+
+
+
+            //--------------------------------------------------------------------------------------
+
+            //vendordata.Clear();
+            //vendordata.Add(finalItem);
+            //dataGridView1.DataSource = vendordata;
+
+        }
+        
     }
 }
