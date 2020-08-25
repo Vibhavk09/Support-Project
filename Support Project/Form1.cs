@@ -224,11 +224,14 @@ namespace Support_Project
             //Binding dynamic vendor Details to a Vendordata object
 
             Vendordata finalItem = new Vendordata();
-            
+            List<Vendordata> dynamicList = new List<Vendordata>();
                 if (selectedVendor != null)
                 {
+                    dynamicList.Clear();
                     finalItem = vendordata.Find(vd => vd.VendorName == selectedVendor);
                     Console.WriteLine("Vendor Name :  {0}  Contact Person :  {1}", finalItem.VendorName, finalItem.ContactPerson);
+                    dynamicList.Add(finalItem);
+                    dataGridView1.DataSource = dynamicList;
                 }
                 else
                 {
