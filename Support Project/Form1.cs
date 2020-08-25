@@ -27,11 +27,14 @@ namespace Support_Project
             
         }
 
-
+        
         List<Vendordata> vendordata = new List<Vendordata>();
+        string selectedVendor = string.Empty;
         private void button1_Click(object sender, EventArgs e)
         {
-            WorkBook workbook = WorkBook.Load(@"C:\Users\Vibhav\source\repos\Support Project\Support Project\Data.xlsx");
+            //WorkBook workbook = WorkBook.Load(@"C:\Users\Vibhav\source\repos\Support Project\Support Project\Data.xlsx");
+            
+            WorkBook workbook = WorkBook.Load(textBox1.Text);
             WorkSheet sheet = workbook.WorkSheets.First();
             //string str = string.Empty;
             //foreach (var cell in sheet["D1:D20"])
@@ -94,8 +97,8 @@ namespace Support_Project
             //      Searching for a specific vendor by his name and retrieving the details of the vendor
 
 
-            Vendordata b= vendordata.Find(vd => vd.VendorName == "OCGC Clothings");
-            Console.WriteLine("Vendor Name is : "+b.ContactPerson);
+            //Vendordata b= vendordata.Find(vd => vd.VendorName == "OCGC Clothings");
+            //Console.WriteLine("Vendor Name is : "+b.ContactPerson);
 
 
             //-------------------------------------------------------------------------------------------------
@@ -211,7 +214,7 @@ namespace Support_Project
 
 
 
-        string selectedVendor = string.Empty;
+        
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -238,7 +241,7 @@ namespace Support_Project
                     MessageBox.Show("Please select a vendor !!");
                 }
             
-
+                
 
 
 
@@ -249,6 +252,46 @@ namespace Support_Project
             //dataGridView1.DataSource = vendordata;
 
         }
-        
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    textBox1.Text = dialog.FileName;
+                }
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void textBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            
+
+
+
+
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[]; // get all files droppeds  
+            if (files != null && files.Any())
+                textBox1.Text = files.First(); //select the first one  
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
