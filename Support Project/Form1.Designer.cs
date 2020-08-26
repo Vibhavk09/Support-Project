@@ -35,14 +35,16 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button4 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(439, 47);
+            this.button1.Location = new System.Drawing.Point(542, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 23);
+            this.button1.Size = new System.Drawing.Size(119, 37);
             this.button1.TabIndex = 0;
             this.button1.Text = "Display Details";
             this.button1.UseVisualStyleBackColor = true;
@@ -53,13 +55,13 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(36, 92);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(963, 498);
+            this.dataGridView1.Size = new System.Drawing.Size(1114, 498);
             this.dataGridView1.TabIndex = 2;
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(720, 49);
+            this.comboBox1.Location = new System.Drawing.Point(848, 49);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(268, 21);
             this.comboBox1.TabIndex = 3;
@@ -67,7 +69,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(65, 50);
+            this.button2.Location = new System.Drawing.Point(36, 49);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -78,7 +80,7 @@
             // textBox1
             // 
             this.textBox1.AllowDrop = true;
-            this.textBox1.Location = new System.Drawing.Point(146, 53);
+            this.textBox1.Location = new System.Drawing.Point(130, 51);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(223, 20);
             this.textBox1.TabIndex = 5;
@@ -88,7 +90,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(456, 622);
+            this.button3.Location = new System.Drawing.Point(475, 622);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 6;
@@ -100,11 +102,32 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(639, 622);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "EXIT";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(1266, 259);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 8;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 657);
+            this.ClientSize = new System.Drawing.Size(1519, 721);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button2);
@@ -129,6 +152,8 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
 
