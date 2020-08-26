@@ -29,6 +29,7 @@ namespace Support_Project
 
         
         List<Vendordata> vendordata = new List<Vendordata>();
+        List<Vendordata> vendordata2 = new List<Vendordata>();
         string selectedVendor = string.Empty;
         string selectedProperty = string.Empty;
         List<string> propertyList = new List<string>();
@@ -139,28 +140,33 @@ namespace Support_Project
                             a.VendorName = v.VendorName;
                             a.ContactPerson = v.ContactPerson;
                             a.ContactNumber = v.ContactNumber;
-                            //MessageBox.Show(s);
                             a.Email = s;
-                            //MessageBox.Show(a.Email);
                             a.AOVendor = v.AOVendor;
                             a.ITContact = v.ITContact;
                             a.ITContactNUmber = v.ITContactNUmber;
-                            vendordata.Add(a);
+                            vendordata2.Add(a);
                         }
                         
                     }
+                    else
+                    {
+                        Vendordata a = new Vendordata();
+                        a.cluster = v.cluster;
+                        a.VendorNo = v.VendorNo;
+                        a.VendorName = v.VendorName;
+                        a.ContactPerson = v.ContactPerson;
+                        a.ContactNumber = v.ContactNumber;
+                        a.Email = v.Email;
+                        a.AOVendor = v.AOVendor;
+                        a.ITContact = v.ITContact;
+                        a.ITContactNUmber = v.ITContactNUmber;
+                        vendordata2.Add(a);
+                    }
                 }
 
-                dataGridView1.DataSource = vendordata;
+                dataGridView1.DataSource = vendordata2;
 
-                //----------------------------------------------------------------------------------------------
-
-                //      Searching for a specific vendor by his name and retrieving the details of the vendor
-
-
-                //Vendordata b= vendordata.Find(vd => vd.VendorName == "OCGC Clothings");
-                //Console.WriteLine("Vendor Name is : "+b.ContactPerson);
-
+                
 
                 //-------------------------------------------------------------------------------------------------
 
@@ -191,29 +197,10 @@ namespace Support_Project
             comboBox2.Items.Add("IT Contact"); 
             comboBox2.Items.Add("IT Contact Number");
 
-            //Console.WriteLine( vendordata[1].VendorName);
 
 
-            //Vendordata finalItem = new Vendordata();
-            //if (selectedVendor != null)
-            //{
-            //    finalItem = vendordata.Find(vd => vd.VendorName == selectedVendor);
-            //    Console.WriteLine("Vendor Name :  {0}  Contact Person :  {1}", finalItem.VendorName, finalItem.ContactPerson);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please select a vendor !!");
-            //}
-
-            //object selected = comboBox1.SelectedItem;
-
-            //Console.WriteLine("Selected Item from combobox : " + selected.ToString());
-
-            //Console.WriteLine("Total Items in list : "+ vendordata.Count());
-            //foreach(Vendordata c in vendordata)
-            //{
-            //    Console.WriteLine("Vendor Name : {0}  COntact Number : {1}", c.VendorName, c.ContactNumber);
-            //}
+            comboBox2.SelectedIndex = 0;
+           
         }
 
 
@@ -299,8 +286,10 @@ namespace Support_Project
         
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
             object selected = comboBox1.SelectedItem;
+
+            
 
             selectedVendor = selected.ToString();
 
@@ -388,7 +377,7 @@ namespace Support_Project
             Console.WriteLine("Selected Property : " + selectedProperty);
             if(selectedProperty== "Name of Vendor")
             {
-                foreach(Vendordata v in vendordata)
+                foreach(Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.VendorName);
                     
@@ -398,7 +387,7 @@ namespace Support_Project
             else if (selectedProperty == "Cluster")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.cluster);
                 }
@@ -406,7 +395,7 @@ namespace Support_Project
             else if (selectedProperty == "Vendor Number")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.VendorNo);
                 }
@@ -414,7 +403,7 @@ namespace Support_Project
             else if(selectedProperty == "Contact Person")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.ContactPerson);
                 }
@@ -422,7 +411,7 @@ namespace Support_Project
             else if (selectedProperty == "Contact Number")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.ContactNumber);
                 }
@@ -430,7 +419,7 @@ namespace Support_Project
             else if (selectedProperty == "Address of Vendor")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.AOVendor);
                 }
@@ -438,7 +427,7 @@ namespace Support_Project
             else if (selectedProperty == "IT Contact")
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.ITContact);
                 }
@@ -446,7 +435,7 @@ namespace Support_Project
             else
             {
                 propertyList.Clear();
-                foreach (Vendordata v in vendordata)
+                foreach (Vendordata v in vendordata2)
                 {
                     propertyList.Add(v.ITContactNUmber);
                 }
