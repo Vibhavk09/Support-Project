@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronXL;
 using System.Linq;
+using System.IO;
+using ExcelDataReader;
 
 namespace Support_Project
 {
@@ -42,8 +44,29 @@ namespace Support_Project
 
             try
             {
-                WorkBook workbook = WorkBook.Load(textBox1.Text);
-                WorkSheet sheet = workbook.WorkSheets.First();
+                //WorkBook workbook = WorkBook.Load(textBox1.Text);
+                //WorkSheet sheet = workbook.WorkSheets.First();
+
+
+                FileStream stream = File.Open(textBox1.Text, FileMode.Open, FileAccess.Read);
+
+                IExcelDataReader reader;
+
+                reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+
+                var conf = new ExcelDataSetConfiguration
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    {
+                        UseHeaderRow = true
+                    }
+                };
+
+                var dataSet = reader.AsDataSet(conf);
+
+                // Now you can get data from each sheet by its index or its "name"
+                var dataTable = dataSet.Tables[0];
+
 
 
 
@@ -51,7 +74,9 @@ namespace Support_Project
                 //  Working Data Table
                 //
 
-                System.Data.DataTable dataTable = sheet.ToDataTable(true);
+
+
+                
 
 
 
