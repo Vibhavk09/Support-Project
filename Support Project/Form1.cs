@@ -11,6 +11,8 @@ using IronXL;
 using System.Linq;
 using System.IO;
 using ExcelDataReader;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Support_Project
 {
@@ -35,199 +37,169 @@ namespace Support_Project
         string selectedVendor = string.Empty;
         string selectedProperty = string.Empty;
         List<string> propertyList = new List<string>();
-        string[] splitstr;
+        //string[] splitstr;
+        //string sheetName;
+        IExcelDataReader reader;
 
+
+        //________________________________________DISPLAY BUTTON CONTENT REMOVED______________________________________
         private void button1_Click(object sender, EventArgs e)
         {
             //WorkBook workbook = WorkBook.Load(@"C:\Users\Vibhav\source\repos\Support Project\Support Project\Data.xlsx");
 
 
-            try
-            {
-                //WorkBook workbook = WorkBook.Load(textBox1.Text);
-                //WorkSheet sheet = workbook.WorkSheets.First();
+            //try
+            //{
+            //    WorkBook workbook = WorkBook.Load(textBox1.Text);
+            //    WorkSheet sheet = workbook.WorkSheets.First();
 
 
-                FileStream stream = File.Open(textBox1.Text, FileMode.Open, FileAccess.Read);
+            //    FileStream stream = File.Open(textBox1.Text, FileMode.Open, FileAccess.Read);
 
-                IExcelDataReader reader;
+            //    IExcelDataReader reader;
 
-                reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+            //    reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
 
-                var conf = new ExcelDataSetConfiguration
-                {
-                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
-                    {
-                        UseHeaderRow = true
-                    }
-                };
+            //    var conf = new ExcelDataSetConfiguration
+            //    {
+            //        ConfigureDataTable = _ => new ExcelDataTableConfiguration
+            //        {
+            //            UseHeaderRow = true
+            //        }
+            //    };
 
-                var dataSet = reader.AsDataSet(conf);
+            //    var dataSet = reader.AsDataSet(conf);
+            //    var dataTable = dataSet.Tables[0];
+            //    // Now you can get data from each sheet by its index or its "name"
 
-                // Now you can get data from each sheet by its index or its "name"
-                var dataTable = dataSet.Tables[0];
+            //    //for (int i = 0; i < dataSet.Tables.Count; i++)
+            //    //{
+            //    //    comboBox3.Items.Add(dataSet.Tables[i].ToString());
+            //    //}
 
-
-
-
-                //--------------------------------------------------------------------------
-                //  Working Data Table
-                //
-
-
-
-                
+            //    //sheetName = comboBox3.SelectedItem.ToString();
+            //    //dataTable = dataSet.Tables[sheetName];
 
 
 
 
-                //--------------------------------------------------------------------------
+            //    //--------------------------------------------------------------------------
+            //    //  Working Data Table
+            //    //
 
 
-                //                  Original
-
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    Vendordata a = new Vendordata();
-                    for (int i = 0; i < dataTable.Columns.Count; i++)
-                    {
-
-                        a.cluster = row[1].ToString();
-                        a.VendorNo = row[2].ToString();
-                        a.VendorName = row[3].ToString();
-                        a.ContactPerson = row[4].ToString();
-                        a.ContactNumber = row[5].ToString();
-                        a.Email = row[6].ToString(); ;
-                        a.AOVendor = row[7].ToString();
-                        a.ITContact = row[8].ToString();
-                        a.ITContactNUmber = row[5].ToString();
-                    }
-                    vendordata.Add(a);
-                }
+            //    //--------------------------------------------------------------------------
 
 
-                //dataGridView1.DataSource = vendordata;
+            //    //                  Original
 
-                //foreach (DataRow row in dataTable.Rows)
-                //{
-                //    Vendordata a = new Vendordata();
+            //    foreach (DataRow row in dataTable.Rows)
+            //    {
+            //        Vendordata a = new Vendordata();
+            //        for (int i = 0; i < 1; i++)
+            //        {
+            //            a.cluster = row["Cluster"].ToString();
+            //            a.VendorNo = row["Vendor No"].ToString();
+            //            a.VendorName = row["Name of Vendor"].ToString();
+            //            a.ContactPerson = row["Contact Person"].ToString();
+            //            a.ContactNumber = row["Contact Nos"].ToString();
+            //            a.Email = row["Email"].ToString(); ;
+            //            a.AOVendor = row["Address of Vendor"].ToString();
+            //            if (dataTable.Columns.Contains("IT Contact") || dataTable.Columns.Contains("IT Contact ") ||
+            //                dataTable.Columns.Contains("IT Contact Number") || dataTable.Columns.Contains("IT Contact Number "))
+            //            {
+            //                a.ITContact = row["IT Contact "].ToString();
+            //                a.ITContactNUmber = row["IT Contact Number"].ToString();
+            //            }
+            //            else
+            //            {
+            //                a.ITContact = null;
+            //                a.ITContactNUmber = null;
+            //            }
 
-                //    for (int i = 0; i <= 1; i++)
-                //    {
+            //        }
+            //        vendordata.Add(a);
+            //    }
+            //    //          SPILTTING TWO EMAILS
 
-                //        a.cluster = row[1].ToString();
-                //        a.VendorNo = row[2].ToString();
-                //        a.VendorName = row[3].ToString();
-                //        a.ContactPerson = row[4].ToString();
-                //        a.ContactNumber = row[5].ToString();
-                //        a.AOVendor = row[7].ToString();
-                //        a.ITContact = row[8].ToString();
-                //        a.ITContactNUmber = row[5].ToString();
-                //        if (row[6].ToString() != null && (row[6].ToString().Contains(',') || row[6].ToString().Contains(';')))
-                //        {
-                //            string str = row[6].ToString();
-                //            splitstr = str.Split(new char[] { ',', ';' });
-                //            foreach (string s in splitstr)
-                //            {
-                //                Console.WriteLine(s);
-                //                MessageBox.Show(s);
-                //                a.Email = s;
-                //                MessageBox.Show(a.Email);
-                //                vendordata.Add(a);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            a.Email = row[6].ToString();
-                //            vendordata.Add(a);
-                //        }
+            //    foreach (Vendordata v in vendordata)
+            //    {
+            //        if (v.Email.Contains(',') || v.Email.Contains(';') || v.Email.Contains('/'))
+            //        {
+            //            string str = v.Email;
+            //            string[] splitstr = str.Split(new char[] { ',', ';', '/' });
 
-                //    }
-                //vendordata.Add(a);
-                //    splitstr = null;
-                //}
+            //            foreach (string s in splitstr)
+            //            {
 
-                //          SPILTTING TWO EMAILS
+            //                Vendordata a = new Vendordata();
+            //                a.cluster = v.cluster;
+            //                a.VendorNo = v.VendorNo;
+            //                a.VendorName = v.VendorName;
+            //                a.ContactPerson = v.ContactPerson;
+            //                a.ContactNumber = v.ContactNumber;
+            //                a.Email = s;
+            //                a.AOVendor = v.AOVendor;
+            //                a.ITContact = v.ITContact;
+            //                a.ITContactNUmber = v.ITContactNUmber;
+            //                vendordata2.Add(a);
+            //            }
 
-                foreach (Vendordata v in vendordata)
-                {
-                    if (v.Email.Contains(',') || v.Email.Contains(';'))
-                    {
-                        string str = v.Email;
-                        string[] splitstr = str.Split(new char[] { ',', ';' });
-                        
-                        foreach (string s in splitstr)
-                        {
+            //        }
+            //        else
+            //        {
+            //            Vendordata a = new Vendordata();
+            //            a.cluster = v.cluster;
+            //            a.VendorNo = v.VendorNo;
+            //            a.VendorName = v.VendorName;
+            //            a.ContactPerson = v.ContactPerson;
+            //            a.ContactNumber = v.ContactNumber;
+            //            a.Email = v.Email;
+            //            a.AOVendor = v.AOVendor;
+            //            a.ITContact = v.ITContact;
+            //            a.ITContactNUmber = v.ITContactNUmber;
+            //            vendordata2.Add(a);
+            //        }
+            //    }
 
-                            Vendordata a = new Vendordata();
-                            a.cluster = v.cluster;
-                            a.VendorNo = v.VendorNo;
-                            a.VendorName = v.VendorName;
-                            a.ContactPerson = v.ContactPerson;
-                            a.ContactNumber = v.ContactNumber;
-                            a.Email = s;
-                            a.AOVendor = v.AOVendor;
-                            a.ITContact = v.ITContact;
-                            a.ITContactNUmber = v.ITContactNUmber;
-                            vendordata2.Add(a);
-                        }
-                        
-                    }
-                    else
-                    {
-                        Vendordata a = new Vendordata();
-                        a.cluster = v.cluster;
-                        a.VendorNo = v.VendorNo;
-                        a.VendorName = v.VendorName;
-                        a.ContactPerson = v.ContactPerson;
-                        a.ContactNumber = v.ContactNumber;
-                        a.Email = v.Email;
-                        a.AOVendor = v.AOVendor;
-                        a.ITContact = v.ITContact;
-                        a.ITContactNUmber = v.ITContactNUmber;
-                        vendordata2.Add(a);
-                    }
-                }
-
-                dataGridView1.DataSource = vendordata2;
-
-                
-
-                //-------------------------------------------------------------------------------------------------
-
-                //          Populating Combobox
-
-
-                foreach (Vendordata l in vendordata)
-                {
-                    comboBox1.Items.Add(l.VendorName.ToString());
-                }
-            }
-            catch(Exception exception)
-            {
-                MessageBox.Show( exception.Message);
-            }
-            finally
-            {
-
-            }
-
-
-            comboBox2.Items.Add("Name of Vendor");
-            comboBox2.Items.Add("Cluster");
-            comboBox2.Items.Add("Vendor Number");
-            comboBox2.Items.Add("Contact Person");
-            comboBox2.Items.Add("Contact Number");
-            comboBox2.Items.Add("Address of Vendor"); 
-            comboBox2.Items.Add("IT Contact"); 
-            comboBox2.Items.Add("IT Contact Number");
+                //dataGridView1.DataSource = vendordata2;
 
 
 
-            comboBox2.SelectedIndex = 0;
-           
+            //    //-------------------------------------------------------------------------------------------------
+
+            //    //          Populating Combobox
+
+
+            //    foreach (Vendordata l in vendordata)
+            //    {
+            //        comboBox1.Items.Add(l.VendorName.ToString());
+            //    }
+            //}
+            //catch (Exception exception)
+            //{
+            //    MessageBox.Show(exception.Message);
+            //}
+            //finally
+            //{
+
+            //}
+
+
+            //comboBox2.Items.Add("Name of Vendor");
+            //comboBox2.Items.Add("Cluster");
+            //comboBox2.Items.Add("Vendor Number");
+            //comboBox2.Items.Add("Contact Person");
+            //comboBox2.Items.Add("Contact Number");
+            //comboBox2.Items.Add("Address of Vendor");
+            //comboBox2.Items.Add("IT Contact");
+            //comboBox2.Items.Add("IT Contact Number");
+
+
+
+            //comboBox2.SelectedIndex = 0;
+
         }
-
 
 
         public class Vendordata
@@ -240,7 +212,7 @@ namespace Support_Project
             string _email;
             string _addressOfVendor;
             string _ITContact;
-            string _ITContactNumber;
+            int? _ITContactNumber;
 
             public string cluster
             {
@@ -294,21 +266,12 @@ namespace Support_Project
         private void richTextBox1_TextChanged_1(object sender, EventArgs e)
         {
 
-        }
+        } 
 
+        //___________________________________ SELECTING SPECIFIC VENDOR FOR DETAILS_______________________________________________
 
+        //                                          VENDOR COMBOBOX
 
-
-
-
-
-
-
-
-
-
-
-        
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -324,10 +287,11 @@ namespace Support_Project
 
             Vendordata finalItem = new Vendordata();
             List<Vendordata> dynamicList = new List<Vendordata>();
-                if (selectedVendor != null)
+            dynamicList.Clear();
+            if (selectedVendor != null)
                 {
-                    dynamicList.Clear();
-                    finalItem = vendordata.Find(vd => vd.VendorName == selectedVendor);
+                    
+                    finalItem = vendordata2.Find(vd => vd.VendorName == selectedVendor);
                     Console.WriteLine("Vendor Name :  {0}  Contact Person :  {1}", finalItem.VendorName, finalItem.ContactPerson);
                     dynamicList.Add(finalItem);
                     dataGridView1.DataSource = dynamicList;
@@ -349,6 +313,8 @@ namespace Support_Project
 
         }
 
+        //_______________________________________________  FILE SELECTING CODE _______________________________________________
+
         private void button2_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
@@ -362,6 +328,7 @@ namespace Support_Project
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+           
 
         }
 
@@ -394,6 +361,10 @@ namespace Support_Project
         {
 
         }
+
+        //_________________________________________________    SELECTING SPECIFIC COLUMN DETAILS IN THE TABLE_____________________________
+
+        //                                                              COLUMN DROPDOWN COMBO BOX
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -470,6 +441,263 @@ namespace Support_Project
             {
                 Console.WriteLine("Property list : " + s);
             }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //_____________________________________________ PROCESSING FILE BUTTON CODE _______________________________________________     
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                WorkBook workbook = WorkBook.Load(textBox1.Text);
+                WorkSheet sheet = workbook.WorkSheets.First();
+                FileStream stream = File.Open(textBox1.Text, FileMode.Open, FileAccess.Read);
+                reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream);
+                var conf = new ExcelDataSetConfiguration
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    {
+                        UseHeaderRow = true
+                    }
+                };
+
+                var dataSet = reader.AsDataSet(conf);
+                for (int i = 0; i < dataSet.Tables.Count; i++)
+                {
+                    comboBox3.Items.Add(dataSet.Tables[i].ToString());
+
+                    
+                }
+                comboBox3.SelectedIndex = 0;
+                
+                var dataTable= dataSet.Tables[comboBox3.SelectedIndex];
+                //                  Original
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Vendordata a = new Vendordata();
+                    for (int i = 0; i < 1; i++)
+                    {
+                        a.cluster = row["Cluster"].ToString();
+                        a.VendorNo = row["Vendor No"].ToString();
+                        a.VendorName = row["Name of Vendor"].ToString();
+                        a.ContactPerson = row["Contact Person"].ToString();
+                        a.ContactNumber = row["Contact Nos"].ToString();
+                        a.Email = row["Email"].ToString(); ;
+                        a.AOVendor = row["Address of Vendor"].ToString();
+                        if (dataTable.Columns.Contains("IT Contact") || dataTable.Columns.Contains("IT Contact ") ||
+                            dataTable.Columns.Contains("IT Contact Number") || dataTable.Columns.Contains("IT Contact Number "))
+                        {
+                            a.ITContact = row["IT Contact "].ToString();
+                            a.ITContactNUmber = row["IT Contact Number"].ToString();
+                        }
+                        else
+                        {
+                            a.ITContact = null;
+                            a.ITContactNUmber = null;
+                        }
+
+                    }
+                    vendordata.Add(a);
+                }
+                //          SPILTTING TWO EMAILS
+
+                foreach (Vendordata v in vendordata)
+                {
+                    if (v.Email.Contains(',') || v.Email.Contains(';') || v.Email.Contains('/'))
+                    {
+                        string str = v.Email;
+                        string[] splitstr = str.Split(new char[] { ',', ';', '/' });
+
+                        foreach (string s in splitstr)
+                        {
+
+                            Vendordata a = new Vendordata();
+                            a.cluster = v.cluster;
+                            a.VendorNo = v.VendorNo;
+                            a.VendorName = v.VendorName;
+                            a.ContactPerson = v.ContactPerson;
+                            a.ContactNumber = v.ContactNumber;
+                            a.Email = s;
+                            a.AOVendor = v.AOVendor;
+                            a.ITContact = v.ITContact;
+                            a.ITContactNUmber = v.ITContactNUmber;
+                            vendordata2.Add(a);
+                        }
+
+                    }
+                    else
+                    {
+                        Vendordata a = new Vendordata();
+                        a.cluster = v.cluster;
+                        a.VendorNo = v.VendorNo;
+                        a.VendorName = v.VendorName;
+                        a.ContactPerson = v.ContactPerson;
+                        a.ContactNumber = v.ContactNumber;
+                        a.Email = v.Email;
+                        a.AOVendor = v.AOVendor;
+                        a.ITContact = v.ITContact;
+                        a.ITContactNUmber = v.ITContactNUmber;
+                        vendordata2.Add(a);
+                    }
+                }
+
+                
+
+
+                //-------------------------------------------------------------------------------------------------
+
+                //          Populating Combobox
+
+
+                foreach (Vendordata l in vendordata)
+                {
+                    comboBox1.Items.Add(l.VendorName.ToString());
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            finally
+            {
+
+            }
+
+
+            comboBox2.Items.Add("Name of Vendor");
+            comboBox2.Items.Add("Cluster");
+            comboBox2.Items.Add("Vendor Number");
+            comboBox2.Items.Add("Contact Person");
+            comboBox2.Items.Add("Contact Number");
+            comboBox2.Items.Add("Address of Vendor");
+            comboBox2.Items.Add("IT Contact");
+            comboBox2.Items.Add("IT Contact Number");
+
+
+
+            comboBox2.SelectedIndex = 0;
+
+        }
+
+
+        //_____________________________   DISPLAYING CONTENT BASED ON DATA SELECTED FROM COMBOBOX CONTAINING SHEETS________________________________
+
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView1.DataSource = null;
+                vendordata.Clear();
+                vendordata2.Clear();
+                var conf = new ExcelDataSetConfiguration
+                {
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                    {
+                        UseHeaderRow = true
+                    }
+                };
+
+                var dataSet = reader.AsDataSet(conf);
+
+                object selected = comboBox3.SelectedItem;
+                selectedProperty = selected.ToString();
+
+                var dataTable = dataSet.Tables[selectedProperty];
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Vendordata a = new Vendordata();
+                    for (int i = 0; i < 1; i++)
+                    {
+                        a.cluster = row["Cluster"].ToString();
+                        a.VendorNo = row["Vendor No"].ToString();
+                        a.VendorName = row["Name of Vendor"].ToString();
+                        a.ContactPerson = row["Contact Person"].ToString();
+                        a.ContactNumber = row["Contact Nos"].ToString();
+                        a.Email = row["Email"].ToString(); ;
+                        a.AOVendor = row["Address of Vendor"].ToString();
+                        if (dataTable.Columns.Contains("IT Contact") || dataTable.Columns.Contains("IT Contact ") ||
+                            dataTable.Columns.Contains("IT Contact Number") || dataTable.Columns.Contains("IT Contact Number "))
+                        {
+                            a.ITContact = row["IT Contact "].ToString();
+                            a.ITContactNUmber = row["IT Contact Number"].ToString();
+                        }
+                        else
+                        {
+                            a.ITContact = null;
+                            a.ITContactNUmber = null;
+                        }
+
+                    }
+                    vendordata.Add(a);
+                }
+                //          SPILTTING TWO EMAILS
+
+                foreach (Vendordata v in vendordata)
+                {
+                    if (v.Email.Contains(',') || v.Email.Contains(';') || v.Email.Contains('/'))
+                    {
+                        string str = v.Email;
+                        string[] splitstr = str.Split(new char[] { ',', ';', '/' });
+
+                        foreach (string s in splitstr)
+                        {
+
+                            Vendordata a = new Vendordata();
+                            a.cluster = v.cluster;
+                            a.VendorNo = v.VendorNo;
+                            a.VendorName = v.VendorName;
+                            a.ContactPerson = v.ContactPerson;
+                            a.ContactNumber = v.ContactNumber;
+                            a.Email = s;
+                            a.AOVendor = v.AOVendor;
+                            a.ITContact = v.ITContact;
+                            a.ITContactNUmber = v.ITContactNUmber;
+                            vendordata2.Add(a);
+                        }
+
+                    }
+                    else
+                    {
+                        Vendordata a = new Vendordata();
+                        a.cluster = v.cluster;
+                        a.VendorNo = v.VendorNo;
+                        a.VendorName = v.VendorName;
+                        a.ContactPerson = v.ContactPerson;
+                        a.ContactNumber = v.ContactNumber;
+                        a.Email = v.Email;
+                        a.AOVendor = v.AOVendor;
+                        a.ITContact = v.ITContact;
+                        a.ITContactNUmber = v.ITContactNUmber;
+                        vendordata2.Add(a);
+                    }
+                }
+
+                dataGridView1.DataSource = vendordata2;
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show( exception.Message);
+            }
+            comboBox1.Items.Clear();
+            foreach (Vendordata l in vendordata)
+            {
+                comboBox1.Items.Add(l.VendorName.ToString());
+            }
+            
         }
     }
 }
